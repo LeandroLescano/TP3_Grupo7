@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_bienvenido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/Bienvenido"
+                android:textColor="#2196F3"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/txt_IniciarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:text="@string/inicia_sesion"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="194dp"
+                android:layout_height="118dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/iconcar"
+                app:srcCompat="@drawable/coche" />
+
+            <EditText
+                android:id="@+id/edt_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="0"
+                android:ems="10"
+                android:hint="@string/nombre_de_usuario"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/edt_contrasenia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="0"
+                android:ems="10"
+                android:hint="@string/contrasenia"
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/btn_Iniciar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:onClick="login"
+                android:text="@string/btn_iniciar_sesion" />
+
+            <TextView
+                android:id="@+id/txt_Registrese"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0"
+                android:clickable="true"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:onClick="redirectRegister"
+                android:text="@string/registrese"
+                android:textColor="#2196F3" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
