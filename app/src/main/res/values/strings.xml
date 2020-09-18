@@ -7,4 +7,6 @@
     <string name="btn_iniciar_sesion">INICIAR SESIÓN</string>
     <string name="registrese">Regístrese</string>
     <string name="iconcar">iconCar</string>
+    <string name="parqueos">Parqueos</string>
+    <string name="profile">Mi Cuenta</string>
 </resources>

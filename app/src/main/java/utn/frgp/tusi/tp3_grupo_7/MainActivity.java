@@ -3,6 +3,8 @@ package utn.frgp.tusi.tp3_grupo_7;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -29,6 +31,20 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view){
 
         if(username.getText().length() > 0 && password.getText().length() > 0){
+            AdminSQLite admin = new AdminSQLite(this, "BaseDatosTp3", null, 1);
+            SQLiteDatabase BasedeDatos = admin.getWritableDatabase();
+
+            String Username = username.getText().toString();
+            String Password = password.getText().toString();
+            Cursor fila = BasedeDatos.rawQuery("select nombre , contrasenia from usuarios where nombre ='"+Username +"'" , null);
+            if(fila.moveToFirst()){
+                Cursor fila2 = BasedeDatos.rawQuery("select nombre, contrasenia from usuarios where contrasenia ='" + Password+"'", null);
+                if(fila2.moveToFirst()){
+                    BasedeDatos.close();
+                    Intent menu = new Intent(this, MenuActivity.class);
+                    startActivity(menu);
+                }
+            }
             //if para chequear usuario en BD
                 //Si existe chequear la contraseña
                     //Ingresar en la app

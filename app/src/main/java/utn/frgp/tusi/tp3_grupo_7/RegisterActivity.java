@@ -1,6 +1,7 @@
 package utn.frgp.tusi.tp3_grupo_7;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +54,8 @@ public class RegisterActivity extends AppCompatActivity {
                   error.show();
                 }finally {
                     BaseDatos.close();
+                    Intent MainActivity = new Intent(this, MainActivity.class);
+                    startActivity(MainActivity);
                 }
 
             }
