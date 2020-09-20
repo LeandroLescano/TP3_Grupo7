@@ -13,6 +13,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class MenuActivity extends AppCompatActivity {
     private AlertDialog dialogAccount, dialogParqueo;
     private int idUser;
     private Toast alertEmpty, alertExito, alertError;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +47,21 @@ public class MenuActivity extends AppCompatActivity {
             dialogAccount = builder.create();
             dialogAccount.setTitle("Mi cuenta");
 
+            final View customLayout = getLayoutInflater().inflate(R.layout.dialog_layout, null);
+            builderP.setView(customLayout);
+
             builderP.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     //Cambiar parametros
-                    if (cargarParqueo("a",1))
-                    {
-                        alertExito.show();
-                    }
-                    else
-                    {
-                        alertError.show();
+                    EditText mat = customLayout.findViewById(R.id.matricula);
+                    EditText tie = customLayout.findViewById(R.id.tiempo);
+
+                    if (!mat.getText().toString().isEmpty() && !tie.getText().toString().isEmpty()) {
+                        if (cargarParqueo(mat.getText().toString(), Integer.parseInt(tie.getText().toString()))) {
+                            alertExito.show();
+                        } else {
+                            alertError.show();
+                        }
                     }
                 }
             });
