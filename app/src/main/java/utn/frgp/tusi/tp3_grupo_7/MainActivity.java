@@ -2,7 +2,9 @@ package utn.frgp.tusi.tp3_grupo_7;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,13 +21,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        username = (EditText) findViewById(R.id.edt_nombre);
-        password = (EditText) findViewById(R.id.edt_contrasenia);
-        alertEmpty = Toast.makeText(getApplicationContext(),"Ambos campos deben estar completos.",Toast.LENGTH_SHORT);
-        alertErrorUser = Toast.makeText(getApplicationContext(), "Nombre de usuario no encontrado.", Toast.LENGTH_SHORT);
-        alertErrorPass = Toast.makeText(getApplicationContext(), "Nombre de usuario o contraseña incorrecta.", Toast.LENGTH_SHORT);
+        SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+        Integer idUser = preferences.getInt("id", -1);
+        if(idUser > 0){
+            Intent menu = new Intent(this, MenuActivity.class);
+            startActivity(menu);
+        }else{
+            setContentView(R.layout.activity_main);
+            username = (EditText) findViewById(R.id.edt_nombre);
+            password = (EditText) findViewById(R.id.edt_contrasenia);
+            alertEmpty = Toast.makeText(getApplicationContext(),"Ambos campos deben estar completos.",Toast.LENGTH_SHORT);
+            alertErrorUser = Toast.makeText(getApplicationContext(), "Nombre de usuario no encontrado.", Toast.LENGTH_SHORT);
+            alertErrorPass = Toast.makeText(getApplicationContext(), "Nombre de usuario o contraseña incorrecta.", Toast.LENGTH_SHORT);
+        }
     }
 
     public void login(View view){
@@ -40,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
                 Cursor fila2 = BasedeDatos.rawQuery("select id from usuarios where contrasenia ='" + Password +"' and nombre = '"+Username+"'", null);
                 if(fila2.moveToFirst()){
                     BasedeDatos.close();
+                    SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("id", Integer.parseInt(fila2.getString(0)));
+                    editor.commit();
                     Intent menu = new Intent(this, MenuActivity.class);
-                    menu.putExtra("id_user", fila2.getString(0));
                     startActivity(menu);
                 }else{
                     alertErrorPass.show();
