@@ -47,4 +47,6 @@
         app:menu="@menu/panel_menu"
         />
 
+    <include layout="@layout/content_main"/>
+
 </androidx.drawerlayout.widget.DrawerLayout >

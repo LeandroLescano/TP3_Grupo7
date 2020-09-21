@@ -28,7 +28,7 @@ public class profile extends AppCompatActivity {
     }else {
         miCuenta = (Button) findViewById(R.id.btn_profile);
         builder = new AlertDialog.Builder(MenuActivity.this);
-        builderP = new AlertDialog.Builder(MenuActivity.this);
+
         alertEmpty = Toast.makeText(getApplicationContext(), "Debe completar todos los campos.", Toast.LENGTH_SHORT);
         alertExito = Toast.makeText(getApplicationContext(), "Parqueo registrado exitosamente", Toast.LENGTH_SHORT);
         alertError = Toast.makeText(getApplicationContext(), "Ha ocurrido un error al intentar registrar el parqueo.", Toast.LENGTH_LONG);
@@ -36,27 +36,6 @@ public class profile extends AppCompatActivity {
         dialogAccount = builder.create();
         dialogAccount.setTitle("Mi cuenta");
 
-        builderP.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //Cambiar parametros
-                if (cargarParqueo("a",1))
-                {
-                    alertExito.show();
-                }
-                else
-                {
-                    alertError.show();
-                }
-            }
-        });
-        builderP.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-
-            }
-        });
-
-        dialogParqueo = builderP.create();
-        dialogParqueo.setTitle("Cargar parqueo");
 
         AdminSQLite admin = new AdminSQLite(this, "BaseDatosTp3", null, 1);
         SQLiteDatabase BasedeDatos = admin.getWritableDatabase();
