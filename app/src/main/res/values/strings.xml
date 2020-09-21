@@ -8,8 +8,8 @@
     <string name="registrese">Regístrese</string>
     <string name="iconcar">iconCar</string>
     <string name="parqueos">Parqueos</string>
-    <string name="logout">Cerrar Sesión</string>
-    <string name="profile">Mi Cuenta</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="profile">Mi cuenta</string>
     <string name="ok">OK</string>
     <string name="cancelar">Cancelar</string>
     <string name="navigation_drawler_close">Cerrar Navegacion</string>

@@ -29,23 +29,42 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawwlayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    private AlertDialog dialogAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menuprincipal);
+        SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
+        Integer idUser = preferences.getInt("id", -1);
+        if(idUser < 0){
+            Intent menu = new Intent(this, MainActivity.class);
+            startActivity(menu);
+        }else {
+             setContentView(R.layout.activity_menuprincipal);
+            drawwlayout = findViewById(R.id.drawer_layout);
+            navigationView = findViewById(R.id.nav_view);
+            toolbar = findViewById(R.id.toolbar);
 
-        drawwlayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setSubtitle("Parqueos");
+            navigationView.bringToFront();
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawwlayout, toolbar, R.string.navigation_drawler_open, R.string.navigation_drawler_close);
+            drawwlayout.addDrawerListener(toggle);
+            toggle.syncState();
+            navigationView.setNavigationItemSelectedListener(this);
 
-        setSupportActionBar(toolbar);
-
-        navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawwlayout , toolbar, R.string.navigation_drawler_open , R.string.navigation_drawler_close);
-        drawwlayout.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+            dialogAccount = builder.create();
+            dialogAccount.setTitle("Mi cuenta");
+            AdminSQLite admin = new AdminSQLite(this, "BaseDatosTp3", null, 1);
+            SQLiteDatabase BasedeDatos = admin.getWritableDatabase();
+            Cursor userData = BasedeDatos.rawQuery("select nombre, email from usuarios where id =" + idUser, null);
+            if (userData.moveToFirst()) {
+                dialogAccount.setMessage("Nombre: " + userData.getString(0) + " \nEmail: " + userData.getString(1));
+            } else {
+                dialogAccount.setMessage("Ha ocurrido un error.");
+            }
+        }
     }
 
     @Override
@@ -66,8 +85,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             case R.id.nav_profile:
-                Intent inten = new Intent(MenuActivity.this , profile.class);
-                startActivity(inten);
+                dialogAccount.show();
                 break;
             case R.id.nav_logout:
                 logout();

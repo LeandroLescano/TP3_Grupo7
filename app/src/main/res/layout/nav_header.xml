@@ -6,14 +6,16 @@
     android:background="@color/colorPrimaryDark"
     android:gravity="bottom"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:id="@+id/headerView">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@drawable/ic_account" />
 
     <TextView
+        android:id="@+id/header_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
@@ -21,6 +23,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
+        android:id="@+id/header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="info@cocodifofi.com" />

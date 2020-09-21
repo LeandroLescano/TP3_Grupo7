@@ -25,6 +25,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 android:theme="@style/AppTheme.NoActionBar"
+                app:titleTextColor="@color/white"
+                app:subtitleTextColor="@color/white"
                 app:navigationIcon="?homeAsUpIndicator"
                 app:popupTheme="@style/AppTheme.NoActionBar" />
 
