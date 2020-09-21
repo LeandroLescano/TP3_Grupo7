@@ -21,6 +21,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        username = (EditText) findViewById(R.id.edt_nombre);
+        password = (EditText) findViewById(R.id.edt_contrasenia);
+        alertEmpty = Toast.makeText(getApplicationContext(),"Ambos campos deben estar completos.",Toast.LENGTH_SHORT);
+        alertErrorUser = Toast.makeText(getApplicationContext(), "Nombre de usuario no encontrado.", Toast.LENGTH_SHORT);
+        alertErrorPass = Toast.makeText(getApplicationContext(), "Nombre de usuario o contraseña incorrecta.", Toast.LENGTH_SHORT);
         SharedPreferences preferences = getSharedPreferences("usuario", Context.MODE_PRIVATE);
         Integer idUser = preferences.getInt("id", -1);
         if(idUser > 0){
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putInt("id", Integer.parseInt(fila2.getString(0)));
                     editor.commit();
                     Intent menu = new Intent(this, MenuActivity.class);
+                    menu.putExtra("id_user", fila2.getString(0));
                     startActivity(menu);
                 }else{
                     alertErrorPass.show();
