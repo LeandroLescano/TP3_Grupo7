@@ -1,17 +1,23 @@
 package dominio;
 
-public class parqueo {
+public class Parqueo {
 
     private Integer id;
     private String patente;
     private Integer tiempo;
     private usuario usuario;
 
-    public parqueo(Integer id, String patente, Integer tiempo, dominio.usuario usuario) {
+    public Parqueo(Integer id, String patente, Integer tiempo, dominio.usuario usuario) {
         this.id = id;
         this.patente = patente;
         this.tiempo = tiempo;
         this.usuario = usuario;
+    }
+
+    public Parqueo(Integer id, String patente, Integer tiempo){
+        this.id = id;
+        this.patente = patente;
+        this.tiempo = tiempo;
     }
 
     public Integer getId() {

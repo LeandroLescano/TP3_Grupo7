@@ -34,7 +34,10 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_container" />
+            android:id="@+id/fragment_container" >
+
+            <include layout="@layout/content_main" />
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -45,8 +48,8 @@
         android:id="@+id/nav_view"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/panel_menu"
-        />
+        >
 
-    <include layout="@layout/content_main"/>
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout >
