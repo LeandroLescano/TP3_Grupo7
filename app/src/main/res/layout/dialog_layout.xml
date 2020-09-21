@@ -10,12 +10,17 @@
         android:id="@+id/matricula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789-"
+        android:maxLength="10"
         android:hint="Matricula" />
 
     <EditText
         android:id="@+id/tiempo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:maxLength="10"
         android:hint="Tiempo"/>
 
 

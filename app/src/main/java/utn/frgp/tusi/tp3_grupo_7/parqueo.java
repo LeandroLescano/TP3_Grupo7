@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import utn.frgp.tusi.tp3_grupo_7.adapter.ParqueoAdapter;
+
 public class parqueo extends AppCompatActivity {
 
     private Button miCuenta;
@@ -17,6 +19,7 @@ public class parqueo extends AppCompatActivity {
     private AlertDialog dialogAccount, dialogParqueo;
     private int idUser;
     private Toast alertEmpty, alertExito, alertError;
+    private ParqueoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +39,17 @@ public class parqueo extends AppCompatActivity {
             SQLiteDatabase BaseDatos = admin.getWritableDatabase();
             try {
                 ContentValues registro = new ContentValues();
-                registro.put("patente", matriculaCargada);
+                registro.put("patente", matriculaCargada.toUpperCase());
                 registro.put("tiempo", tiempoCargado);
                 registro.put("id_usuario", idUser);
                 BaseDatos.insert("parqueos", null, registro);
+
 
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             } finally {
+
                 BaseDatos.close();
 
             }

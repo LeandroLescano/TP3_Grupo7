@@ -68,7 +68,7 @@ public class ParqueoFragment extends Fragment {
 
         alertEmpty = Toast.makeText(getActivity(), "Debe completar todos los campos.", Toast.LENGTH_SHORT);
         alertExito = Toast.makeText(getActivity(), "Parqueo registrado exitosamente", Toast.LENGTH_SHORT);
-        alertError = Toast.makeText(getActivity(), "Ha ocurrido un error al intentar registrar el parqueo.", Toast.LENGTH_LONG);
+        alertError = Toast.makeText(getActivity(), "Los campos deben estar completos para cargar el parqueo", Toast.LENGTH_LONG);
         builderP.setView(customLayout);
         builderP.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -78,11 +78,16 @@ public class ParqueoFragment extends Fragment {
                 if (!mat.getText().toString().isEmpty() && !tie.getText().toString().isEmpty()) {
                     if (cargarParqueo(mat.getText().toString(), Integer.parseInt(tie.getText().toString()))) {
                         alertExito.show();
-                    } else {
-                        alertError.show();
+                        mat.setText("");
+                        tie.setText("");
+
+
                     }
+                } else {
+                    alertError.show();
                 }
             }
+
         });
         builderP.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -110,7 +115,7 @@ public class ParqueoFragment extends Fragment {
             SQLiteDatabase BaseDatos = admin.getWritableDatabase();
             try {
                 ContentValues registro = new ContentValues();
-                registro.put("patente", matriculaCargada);
+                registro.put("patente", matriculaCargada.toUpperCase());
                 registro.put("tiempo", tiempoCargado);
                 registro.put("id_usuario", idUser);
                 BaseDatos.insert("parqueos", null, registro);
@@ -120,6 +125,10 @@ public class ParqueoFragment extends Fragment {
                 return false;
             } finally {
                 BaseDatos.close();
+                //adapter.notifyDataSetChanged();
+                //grid.setAdapter(adapter);
+                adapter = new ParqueoAdapter(getContext(), loadParqueos());
+                grid.setAdapter(adapter);
             }
         }
         return true;
