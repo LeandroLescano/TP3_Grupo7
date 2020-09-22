@@ -35,19 +35,21 @@ import utn.frgp.tusi.tp3_grupo_7.adapter.ParqueoAdapter;
 public class ParqueoFragment extends Fragment {
 
     private ParqueoViewModel parqueoViewModel;
-    private AlertDialog dialogParqueo;
-    private AlertDialog.Builder builderP;
-    private Toast alertEmpty, alertExito, alertError;
+    private AlertDialog dialogParqueo, dialogEliminar;
+    private AlertDialog.Builder builderP, builderB;
+    private Toast alertEmpty, alertExito, alertError, alertBorrado;
     private Integer idUser;
     private ParqueoAdapter adapter;
     private GridView grid;
     private ArrayList<Parqueo> lista;
+    private Parqueo selected;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         parqueoViewModel = new ViewModelProvider(this).get(ParqueoViewModel.class);
         View root = inflater.inflate(R.layout.fragment_parqueo, container, false);
 
+        builderB = new AlertDialog.Builder(getActivity());
         builderP = new AlertDialog.Builder(getActivity());
         final View customLayout = getLayoutInflater().inflate(R.layout.dialog_layout, null);
 
@@ -69,6 +71,8 @@ public class ParqueoFragment extends Fragment {
         alertEmpty = Toast.makeText(getActivity(), "Debe completar todos los campos.", Toast.LENGTH_SHORT);
         alertExito = Toast.makeText(getActivity(), "Parqueo registrado exitosamente", Toast.LENGTH_SHORT);
         alertError = Toast.makeText(getActivity(), "Los campos deben estar completos para cargar el parqueo", Toast.LENGTH_LONG);
+        alertBorrado = Toast.makeText(getActivity(), "El parqueo fue borrado con éxito", Toast.LENGTH_LONG);
+
         builderP.setView(customLayout);
         builderP.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -97,15 +101,39 @@ public class ParqueoFragment extends Fragment {
         dialogParqueo = builderP.create();
         dialogParqueo.setTitle("Cargar parqueo");
 
+        builderB.setPositiveButton("Borrar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            borrarParqueo(selected.getId());
+            alertBorrado.show();
+
+            }
+
+        });
+        builderB.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+
+        dialogEliminar = builderB.create();
+        dialogEliminar.setTitle("Eliminar parqueo");
+
+
+
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id){
+            selected = (Parqueo) lista.get(position);
+            dialogEliminar.show();
 
             }
         });
 
         return root;
     }
+
+
 
     public boolean cargarParqueo(String matriculaCargada, int tiempoCargado) {
         String matricula = matriculaCargada;
@@ -151,4 +179,18 @@ public class ParqueoFragment extends Fragment {
         }
         return lista;
     }
+
+    public void borrarParqueo(int idParqueo){
+        AdminSQLite admin = new AdminSQLite(getContext(), "BaseDatosTp3", null, 1);
+        SQLiteDatabase BasedeDatos = admin.getWritableDatabase();
+        lista = new ArrayList<>();
+        BasedeDatos.delete("parqueos", "id=" + idParqueo, null);
+        //BasedeDatos.rawQuery("delete from parqueos where id ="+ idParqueo , null);
+        //Toast pruebita = Toast.makeText(getActivity(), selected.getId().toString(), Toast.LENGTH_LONG);
+        //pruebita.show();
+        adapter = new ParqueoAdapter(getContext(), loadParqueos());
+        grid.setAdapter(adapter);
+
+    }
+
 }
