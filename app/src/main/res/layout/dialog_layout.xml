@@ -10,7 +10,7 @@
         android:id="@+id/matricula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789-"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-"
         android:maxLength="10"
         android:hint="Matricula" />
 

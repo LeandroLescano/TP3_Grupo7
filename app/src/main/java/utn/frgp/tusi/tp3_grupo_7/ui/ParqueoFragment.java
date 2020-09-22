@@ -119,21 +119,16 @@ public class ParqueoFragment extends Fragment {
         dialogEliminar = builderB.create();
         dialogEliminar.setTitle("Eliminar parqueo");
 
-
-
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-            selected = (Parqueo) lista.get(position);
-            dialogEliminar.show();
-
+                selected = lista.get(position);
+                dialogEliminar.show();
             }
         });
 
         return root;
     }
-
-
 
     public boolean cargarParqueo(String matriculaCargada, int tiempoCargado) {
         String matricula = matriculaCargada;
@@ -153,8 +148,6 @@ public class ParqueoFragment extends Fragment {
                 return false;
             } finally {
                 BaseDatos.close();
-                //adapter.notifyDataSetChanged();
-                //grid.setAdapter(adapter);
                 adapter = new ParqueoAdapter(getContext(), loadParqueos());
                 grid.setAdapter(adapter);
             }
@@ -185,9 +178,6 @@ public class ParqueoFragment extends Fragment {
         SQLiteDatabase BasedeDatos = admin.getWritableDatabase();
         lista = new ArrayList<>();
         BasedeDatos.delete("parqueos", "id=" + idParqueo, null);
-        //BasedeDatos.rawQuery("delete from parqueos where id ="+ idParqueo , null);
-        //Toast pruebita = Toast.makeText(getActivity(), selected.getId().toString(), Toast.LENGTH_LONG);
-        //pruebita.show();
         adapter = new ParqueoAdapter(getContext(), loadParqueos());
         grid.setAdapter(adapter);
 
